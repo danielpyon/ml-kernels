@@ -1,53 +1,23 @@
-cmake_minimum_required(VERSION 3.8 FATAL_ERROR)
-project(cmake_and_cuda LANGUAGES CXX CUDA)
+cmake_minimum_required(VERSION 3.23.1)
+project(ml-kernels LANGUAGES CXX CUDA VERSION 1.0)
 
-# gtest
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 include(FetchContent)
 FetchContent_Declare(
     googletest
     URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+    DOWNLOAD_EXTRACT_TIMESTAMP ON
 )
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-include(CTest)
+set(TARGET_NAME tutorial)
+set(PROJECT_BINARY_DIR build)
 
-add_library(particles STATIC
-  randomize.cpp
-  randomize.h
-  particle.cu
-  particle.h
-  v3.cu
-  v3.h
-  )
+add_executable(${TARGET_NAME} tutorial.cc)
+# configure_file(TutorialConfig.h.in, TutorialConfig.h/TutorialConfig.h)
+# target_include_directories(${TARGET_NAME} PUBLIC ${PROJECT_BINARY_DIR})
 
-# Request that particles be built with -std=c++11
-# As this is a public compile feature anything that links to particles
-# will also build with -std=c++11
-target_compile_features(particles PUBLIC cxx_std_11)
-
-# We need to explicitly state that we need all CUDA files in the particle
-# library to be built with -dc as the member functions could be called by
-# other libraries and executables
-set_target_properties( particles
-                       PROPERTIES CUDA_SEPARABLE_COMPILATION ON
-                      )
-
-if(BUILD_TESTING)
-
-  add_executable(particle_test test.cu)
-
-  set_target_properties(particle_test PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
-  target_link_libraries(particle_test PRIVATE particles)
-
-  add_test(NAME particles_10k COMMAND particle_test 10000 )
-  add_test(NAME particles_256k COMMAND particle_test 256000 )
-
-  if(APPLE)
-    # We need to add the default path to the driver (libcuda.dylib) as an rpath,
-    # so that the static cuda runtime can find it at runtime.
-    set_property(TARGET particle_test PROPERTY BUILD_RPATH ${CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES})
-  endif()
-endif()
+# add_library(ml-kernels STATIC)
+# target_compile_features(ml-kernels PUBLIC cxx_std_14)
