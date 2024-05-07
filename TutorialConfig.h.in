@@ -1,2 +1,2 @@
-#define Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
-#define Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR@
+#define kernels_VERSION_MAJOR @ml-kernels_VERSION_MAJOR@
+#define kernels_VERSION_MINOR @ml-kernels_VERSION_MINOR@
