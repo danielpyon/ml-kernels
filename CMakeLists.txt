@@ -16,8 +16,8 @@ set(TARGET_NAME tutorial)
 set(PROJECT_BINARY_DIR build)
 
 add_executable(${TARGET_NAME} tutorial.cc)
-# configure_file(TutorialConfig.h.in, TutorialConfig.h/TutorialConfig.h)
-# target_include_directories(${TARGET_NAME} PUBLIC ${PROJECT_BINARY_DIR})
+target_include_directories(${TARGET_NAME} PUBLIC "${PROJECT_BINARY_DIR}")
+configure_file(TutorialConfig.h.in TutorialConfig.h/TutorialConfig.h)
 
 # add_library(ml-kernels STATIC)
 # target_compile_features(ml-kernels PUBLIC cxx_std_14)
