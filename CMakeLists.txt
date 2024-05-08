@@ -16,8 +16,14 @@ set(TARGET_NAME tutorial)
 set(PROJECT_BINARY_DIR build)
 
 add_executable(${TARGET_NAME} tutorial.cc)
+add_subdirectory(MathFunctions)
+target_link_libraries(${TARGET_NAME} PUBLIC MathFunctions)
+
 configure_file(TutorialConfig.h.in TutorialConfig.h)
-target_include_directories(${TARGET_NAME} PUBLIC ${PROJECT_BINARY_DIR})
+# header files
+target_include_directories(${TARGET_NAME} PUBLIC
+    ${PROJECT_BINARY_DIR}
+    MathFunctions)
 
 # add_library(ml-kernels STATIC)
 # target_compile_features(ml-kernels PUBLIC cxx_std_14)
