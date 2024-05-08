@@ -1,4 +1,6 @@
+import torch
 import triton
+import triton.language as tl
 
 @triton.jit
 def sample_from_prob_kernel(x_ptr,  # *Pointer* to first input vector.
@@ -28,7 +30,7 @@ def sample_from_prob_kernel(x_ptr,  # *Pointer* to first input vector.
   # Write x + y back to DRAM.
   tl.store(output_ptr + offsets, output, mask=mask)
 
-def sample_from_prob():
+def sample_from_prob(x: torch.Tensor):
   # We need to preallocate the output.
   output = torch.empty_like(x)
   assert x.is_cuda and y.is_cuda and output.is_cuda
@@ -47,4 +49,4 @@ def sample_from_prob():
   return output
 
 if __name__ == '__main__':
-  sample_from_prob()
+  pass
