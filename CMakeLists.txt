@@ -12,18 +12,19 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-set(TARGET_NAME tutorial)
+set(TARGET_NAME test)
 set(PROJECT_BINARY_DIR build)
 
-add_executable(${TARGET_NAME} tutorial.cc)
-add_subdirectory(MathFunctions)
-add_subdirectory(kernels)
-target_link_libraries(${TARGET_NAME} PUBLIC MathFunctions)
-target_link_libraries(${TARGET_NAME} PUBLIC kernels)
+add_executable(${TARGET_NAME} test.cc)
 
-configure_file(TutorialConfig.h.in TutorialConfig.h)
+# link libs
+add_subdirectory(kernels)
+target_link_libraries(${TARGET_NAME} PUBLIC
+    kernels
+    gtest
+    gtest_main)
+
 # header files
 target_include_directories(${TARGET_NAME} PUBLIC
     ${PROJECT_BINARY_DIR}
-    MathFunctions
     kernels)

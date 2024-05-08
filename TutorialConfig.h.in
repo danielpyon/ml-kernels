@@ -1,2 +1,0 @@
-#define kernels_VERSION_MAJOR @ml-kernels_VERSION_MAJOR@
-#define kernels_VERSION_MINOR @ml-kernels_VERSION_MINOR@
