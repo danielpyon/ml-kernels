@@ -1,2 +1,0 @@
-print('running triton tests')
-
