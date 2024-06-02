@@ -29,7 +29,6 @@ def add(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
 
   return out
 
-
 def rel_error(x, y):
   scale = max(x.shape[0], y.shape[0])
   return (torch.abs(x-y) / scale).sum().item()
