@@ -1,1 +1,5 @@
-add_library(kernels norm.cu sampling.cu)
+if (GPU_LANGUAGE STREQUAL "CUDA")
+    add_library(kernels norm.cu sampling.cu)
+elseif (GPU_LANGUAGE STREQUAL "HIP")
+    add_library(kernels norm.hip sampling.hip)
+endif()
